@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+// Default coordinates for Desa Sumberagung
+const DESA_SUMBERAGUNG = {
+  lat: -7.0521,
+  lng: 110.7987
+};
+
 interface CoordinateManagementProps {
   koordinatList: Koordinat[];
   setKoordinatList: React.Dispatch<React.SetStateAction<Koordinat[]>>;
@@ -36,9 +41,9 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
   const [deleteKoordinat, setDeleteKoordinat] = useState<Koordinat | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Map picker states
-  const [selectedLatitude, setSelectedLatitude] = useState(-7.2575);
-  const [selectedLongitude, setSelectedLongitude] = useState(112.7521);
+  // Map picker states - using default Desa Sumberagung coordinates
+  const [selectedLatitude, setSelectedLatitude] = useState(DESA_SUMBERAGUNG.lat);
+  const [selectedLongitude, setSelectedLongitude] = useState(DESA_SUMBERAGUNG.lng);
 
   // Visibility state
   const [hiddenKoordinat, setHiddenKoordinat] = useState<Set<number>>(new Set());
@@ -57,7 +62,9 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
         { value: 'Pertanian', label: 'Pertanian' },
         { value: 'Pemukiman', label: 'Pemukiman' },
         { value: 'Infrastruktur', label: 'Infrastruktur' },
-        { value: 'Pariwisata', label: 'Pariwisata' }
+        { value: 'Pariwisata', label: 'Pariwisata' },
+        { value: 'Pendidikan', label: 'Pendidikan' },
+        { value: 'Kesehatan', label: 'Kesehatan' }
       ]
     },
     { name: 'deskripsi', label: 'Deskripsi', type: 'textarea', placeholder: 'Masukkan deskripsi lokasi (opsional)' }
@@ -157,8 +164,9 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
       setSelectedLongitude(koordinat.longitude);
     } else {
       setEditingKoordinat(null);
-      setSelectedLatitude(-7.2575);
-      setSelectedLongitude(112.7521);
+      // Always use default Desa Sumberagung coordinates for new coordinates
+      setSelectedLatitude(DESA_SUMBERAGUNG.lat);
+      setSelectedLongitude(DESA_SUMBERAGUNG.lng);
     }
     setIsKoordinatFormOpen(true);
   };
@@ -182,7 +190,9 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
       'Pertanian': 'bg-yellow-100 text-yellow-800',
       'Pemukiman': 'bg-purple-100 text-purple-800',
       'Infrastruktur': 'bg-gray-100 text-gray-800',
-      'Pariwisata': 'bg-pink-100 text-pink-800'
+      'Pariwisata': 'bg-pink-100 text-pink-800',
+      'Pendidikan': 'bg-cyan-100 text-cyan-800',
+      'Kesehatan': 'bg-red-100 text-red-800'
     };
     return colors[tipe as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
@@ -197,7 +207,7 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
               Manajemen Titik Koordinat
             </CardTitle>
             <p className="text-sm text-muted-foreground mt-1">
-              Kelola titik-titik koordinat penting di wilayah Anda
+              Kelola titik-titik koordinat penting di wilayah Desa Sumberagung
             </p>
           </div>
           <Button onClick={() => handleOpenKoordinatForm()} disabled={isLoading}>
@@ -286,7 +296,10 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
                     {editingKoordinat ? "Edit Koordinat" : "Tambah Koordinat Baru"}
                   </h2>
                   <p className="text-muted-foreground mt-1">
-                    {editingKoordinat ? "Perbarui informasi koordinat" : "Pilih lokasi pada peta dan isi detail koordinat"}
+                    {editingKoordinat 
+                      ? "Perbarui informasi koordinat" 
+                      : "Pilih lokasi pada peta di wilayah Desa Sumberagung dan isi detail koordinat"
+                    }
                   </p>
                 </div>
                 <Button
@@ -316,6 +329,9 @@ export const CoordinateManagement: React.FC<CoordinateManagementProps> = ({
                   <div className="mt-3 p-3 bg-muted/50 rounded text-sm">
                     <p><span className="font-medium">Koordinat Terpilih:</span></p>
                     <code>{selectedLatitude.toFixed(6)}, {selectedLongitude.toFixed(6)}</code>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Default: Pusat Desa Sumberagung (7.0521° S, 110.7987° E)
+                    </p>
                   </div>
                 </div>
                 
