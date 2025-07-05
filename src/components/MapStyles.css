@@ -1,0 +1,33 @@
+
+/* Custom styles for Leaflet popups */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: white;
+  color: #374151;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.custom-popup .leaflet-popup-close-button {
+  color: #6b7280;
+  font-size: 18px;
+  padding: 4px 8px;
+}
+
+.custom-popup .leaflet-popup-close-button:hover {
+  color: #374151;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+}
