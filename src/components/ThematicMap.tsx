@@ -197,9 +197,33 @@ export const ThematicMap = () => {
 
   const addPopulationAreas = (layerGroup: L.LayerGroup, color: string) => {
     const areas = [
-      { coords: [[-7.0500, 110.7960], [-7.0500, 110.7980], [-7.0520, 110.7980], [-7.0520, 110.7960]], density: 'Tinggi (350-400 jiwa/km²)' },
-      { coords: [[-7.0520, 110.7980], [-7.0520, 110.8000], [-7.0540, 110.8000], [-7.0540, 110.7980]], density: 'Sedang (250-350 jiwa/km²)' },
-      { coords: [[-7.0540, 110.7960], [-7.0540, 110.7980], [-7.0560, 110.7980], [-7.0560, 110.7960]], density: 'Rendah (150-250 jiwa/km²)' }
+      { 
+        coords: [
+          [-7.0500, 110.7960] as L.LatLngTuple, 
+          [-7.0500, 110.7980] as L.LatLngTuple, 
+          [-7.0520, 110.7980] as L.LatLngTuple, 
+          [-7.0520, 110.7960] as L.LatLngTuple
+        ], 
+        density: 'Tinggi (350-400 jiwa/km²)' 
+      },
+      { 
+        coords: [
+          [-7.0520, 110.7980] as L.LatLngTuple, 
+          [-7.0520, 110.8000] as L.LatLngTuple, 
+          [-7.0540, 110.8000] as L.LatLngTuple, 
+          [-7.0540, 110.7980] as L.LatLngTuple
+        ], 
+        density: 'Sedang (250-350 jiwa/km²)' 
+      },
+      { 
+        coords: [
+          [-7.0540, 110.7960] as L.LatLngTuple, 
+          [-7.0540, 110.7980] as L.LatLngTuple, 
+          [-7.0560, 110.7980] as L.LatLngTuple, 
+          [-7.0560, 110.7960] as L.LatLngTuple
+        ], 
+        density: 'Rendah (150-250 jiwa/km²)' 
+      }
     ];
 
     areas.forEach(area => {
@@ -215,9 +239,33 @@ export const ThematicMap = () => {
 
   const addAgricultureAreas = (layerGroup: L.LayerGroup, color: string) => {
     const areas = [
-      { coords: [[-7.0490, 110.7970], [-7.0490, 110.7990], [-7.0510, 110.7990], [-7.0510, 110.7970]], type: 'Sawah Irigasi Teknis' },
-      { coords: [[-7.0530, 110.7990], [-7.0530, 110.8010], [-7.0550, 110.8010], [-7.0550, 110.7990]], type: 'Sawah Tadah Hujan' },
-      { coords: [[-7.0510, 110.8000], [-7.0510, 110.8020], [-7.0530, 110.8020], [-7.0530, 110.8000]], type: 'Sawah Semi Teknis' }
+      { 
+        coords: [
+          [-7.0490, 110.7970] as L.LatLngTuple, 
+          [-7.0490, 110.7990] as L.LatLngTuple, 
+          [-7.0510, 110.7990] as L.LatLngTuple, 
+          [-7.0510, 110.7970] as L.LatLngTuple
+        ], 
+        type: 'Sawah Irigasi Teknis' 
+      },
+      { 
+        coords: [
+          [-7.0530, 110.7990] as L.LatLngTuple, 
+          [-7.0530, 110.8010] as L.LatLngTuple, 
+          [-7.0550, 110.8010] as L.LatLngTuple, 
+          [-7.0550, 110.7990] as L.LatLngTuple
+        ], 
+        type: 'Sawah Tadah Hujan' 
+      },
+      { 
+        coords: [
+          [-7.0510, 110.8000] as L.LatLngTuple, 
+          [-7.0510, 110.8020] as L.LatLngTuple, 
+          [-7.0530, 110.8020] as L.LatLngTuple, 
+          [-7.0530, 110.8000] as L.LatLngTuple
+        ], 
+        type: 'Sawah Semi Teknis' 
+      }
     ];
 
     areas.forEach(area => {
@@ -233,9 +281,33 @@ export const ThematicMap = () => {
 
   const addEducationAreas = (layerGroup: L.LayerGroup, color: string) => {
     const areas = [
-      { coords: [[-7.0505, 110.7985], [-7.0505, 110.7995], [-7.0515, 110.7995], [-7.0515, 110.7985]], level: 'Zona SD-SMP (70% populasi)' },
-      { coords: [[-7.0515, 110.7995], [-7.0515, 110.8005], [-7.0525, 110.8005], [-7.0525, 110.7995]], level: 'Zona SMA (20% populasi)' },
-      { coords: [[-7.0525, 110.7975], [-7.0525, 110.7985], [-7.0535, 110.7985], [-7.0535, 110.7975]], level: 'Zona Perguruan Tinggi (10% populasi)' }
+      { 
+        coords: [
+          [-7.0505, 110.7985] as L.LatLngTuple, 
+          [-7.0505, 110.7995] as L.LatLngTuple, 
+          [-7.0515, 110.7995] as L.LatLngTuple, 
+          [-7.0515, 110.7985] as L.LatLngTuple
+        ], 
+        level: 'Zona SD-SMP (70% populasi)' 
+      },
+      { 
+        coords: [
+          [-7.0515, 110.7995] as L.LatLngTuple, 
+          [-7.0515, 110.8005] as L.LatLngTuple, 
+          [-7.0525, 110.8005] as L.LatLngTuple, 
+          [-7.0525, 110.7995] as L.LatLngTuple
+        ], 
+        level: 'Zona SMA (20% populasi)' 
+      },
+      { 
+        coords: [
+          [-7.0525, 110.7975] as L.LatLngTuple, 
+          [-7.0525, 110.7985] as L.LatLngTuple, 
+          [-7.0535, 110.7985] as L.LatLngTuple, 
+          [-7.0535, 110.7975] as L.LatLngTuple
+        ], 
+        level: 'Zona Perguruan Tinggi (10% populasi)' 
+      }
     ];
 
     areas.forEach(area => {
@@ -251,9 +323,33 @@ export const ThematicMap = () => {
 
   const addOccupationAreas = (layerGroup: L.LayerGroup, color: string) => {
     const areas = [
-      { coords: [[-7.0495, 110.7975], [-7.0495, 110.7985], [-7.0505, 110.7985], [-7.0505, 110.7975]], job: 'Zona Petani (60% populasi)' },
-      { coords: [[-7.0515, 110.7985], [-7.0515, 110.7995], [-7.0525, 110.7995], [-7.0525, 110.7985]], job: 'Zona Pedagang (25% populasi)' },
-      { coords: [[-7.0535, 110.7995], [-7.0535, 110.8005], [-7.0545, 110.8005], [-7.0545, 110.7995]], job: 'Zona Pegawai/Lainnya (15% populasi)' }
+      { 
+        coords: [
+          [-7.0495, 110.7975] as L.LatLngTuple, 
+          [-7.0495, 110.7985] as L.LatLngTuple, 
+          [-7.0505, 110.7985] as L.LatLngTuple, 
+          [-7.0505, 110.7975] as L.LatLngTuple
+        ], 
+        job: 'Zona Petani (60% populasi)' 
+      },
+      { 
+        coords: [
+          [-7.0515, 110.7985] as L.LatLngTuple, 
+          [-7.0515, 110.7995] as L.LatLngTuple, 
+          [-7.0525, 110.7995] as L.LatLngTuple, 
+          [-7.0525, 110.7985] as L.LatLngTuple
+        ], 
+        job: 'Zona Pedagang (25% populasi)' 
+      },
+      { 
+        coords: [
+          [-7.0535, 110.7995] as L.LatLngTuple, 
+          [-7.0535, 110.8005] as L.LatLngTuple, 
+          [-7.0545, 110.8005] as L.LatLngTuple, 
+          [-7.0545, 110.7995] as L.LatLngTuple
+        ], 
+        job: 'Zona Pegawai/Lainnya (15% populasi)' 
+      }
     ];
 
     areas.forEach(area => {
