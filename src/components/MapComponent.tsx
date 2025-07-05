@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -13,11 +12,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+// Consistent coordinates for Desa Sumberagung
+const DESA_SUMBERAGUNG = {
+  lat: -7.0521,
+  lng: 110.7987
+};
+
 const MapComponent = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
 
-  // Data sawah dengan koordinat GeoJSON dan informasi musim tanam
+  // Updated sawah data with coordinates relative to Desa Sumberagung
   const sawahGeoData = {
     type: "FeatureCollection",
     features: [
@@ -32,16 +37,16 @@ const MapComponent = () => {
           varietas: "IR64",
           musim: "Gadu", // Gadu (Musim Kering)
           status: "Panen",
-          alamat: "Desa Sukamaju"
+          alamat: "Desa Sumberagung, RT 01"
         },
         geometry: {
           type: "Polygon",
           coordinates: [[
-            [112.7510, -7.2570],
-            [112.7520, -7.2570],
-            [112.7520, -7.2580],
-            [112.7510, -7.2580],
-            [112.7510, -7.2570]
+            [110.7970, -7.0500],
+            [110.7980, -7.0500],
+            [110.7980, -7.0510],
+            [110.7970, -7.0510],
+            [110.7970, -7.0500]
           ]]
         }
       },
@@ -56,16 +61,16 @@ const MapComponent = () => {
           varietas: "Ciherang",
           musim: "Rendengan", // Rendengan (Musim Hujan)
           status: "Tanam",
-          alamat: "Desa Makmur"
+          alamat: "Desa Sumberagung, RT 02"
         },
         geometry: {
           type: "Polygon",
           coordinates: [[
-            [112.7525, -7.2575],
-            [112.7535, -7.2575],
-            [112.7535, -7.2585],
-            [112.7525, -7.2585],
-            [112.7525, -7.2575]
+            [110.7985, -7.0515],
+            [110.7995, -7.0515],
+            [110.7995, -7.0525],
+            [110.7985, -7.0525],
+            [110.7985, -7.0515]
           ]]
         }
       },
@@ -80,16 +85,16 @@ const MapComponent = () => {
           varietas: "Inpari 32",
           musim: "Gadu",
           status: "Vegetatif",
-          alamat: "Desa Sejahtera"
+          alamat: "Desa Sumberagung, RT 03"
         },
         geometry: {
           type: "Polygon",
           coordinates: [[
-            [112.7505, -7.2560],
-            [112.7515, -7.2560],
-            [112.7515, -7.2570],
-            [112.7505, -7.2570],
-            [112.7505, -7.2560]
+            [110.7995, -7.0520],
+            [110.8005, -7.0520],
+            [110.8005, -7.0530],
+            [110.7995, -7.0530],
+            [110.7995, -7.0520]
           ]]
         }
       },
@@ -104,16 +109,16 @@ const MapComponent = () => {
           varietas: "IR64",
           musim: "Rendengan",
           status: "Panen",
-          alamat: "Desa Subur"
+          alamat: "Desa Sumberagung, RT 04"
         },
         geometry: {
           type: "Polygon",
           coordinates: [[
-            [112.7530, -7.2590],
-            [112.7540, -7.2590],
-            [112.7540, -7.2600],
-            [112.7530, -7.2600],
-            [112.7530, -7.2590]
+            [110.8000, -7.0540],
+            [110.8010, -7.0540],
+            [110.8010, -7.0550],
+            [110.8000, -7.0550],
+            [110.8000, -7.0540]
           ]]
         }
       }
@@ -149,15 +154,27 @@ const MapComponent = () => {
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Inisialisasi peta dengan OpenStreetMap
-    map.current = L.map(mapContainer.current).setView([-7.2575, 112.7521], 15);
+    // Initialize map centered on Desa Sumberagung
+    map.current = L.map(mapContainer.current).setView([DESA_SUMBERAGUNG.lat, DESA_SUMBERAGUNG.lng], 14);
 
-    // Tambahkan tile layer OpenStreetMap
+    // Add tile layer OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map.current);
 
-    // Tambahkan layer GeoJSON sawah
+    // Add village center marker
+    L.marker([DESA_SUMBERAGUNG.lat, DESA_SUMBERAGUNG.lng])
+      .addTo(map.current)
+      .bindPopup(`
+        <div class="p-3">
+          <h3 class="font-bold text-blue-700 text-lg mb-2">Desa Sumberagung</h3>
+          <p class="text-sm"><span class="font-semibold">Kecamatan:</span> Godong</p>
+          <p class="text-sm"><span class="font-semibold">Kabupaten:</span> Grobogan</p>
+          <p class="text-sm"><span class="font-semibold">Koordinat:</span> 7.0521° S, 110.7987° E</p>
+        </div>
+      `);
+
+    // Add GeoJSON sawah layer
     const sawahLayer = L.geoJSON(sawahGeoData as any, {
       style: (feature) => {
         if (!feature?.properties) return {};
@@ -208,7 +225,7 @@ const MapComponent = () => {
       }
     }).addTo(map.current);
 
-    // Sesuaikan zoom untuk menampilkan semua sawah
+    // Fit bounds to show all sawah areas
     map.current.fitBounds(sawahLayer.getBounds(), { padding: [20, 20] });
 
     // Cleanup function
@@ -224,9 +241,10 @@ const MapComponent = () => {
     <div className="relative w-full h-full">
       <div ref={mapContainer} className="absolute inset-0 rounded-lg" />
       
-      {/* Legend */}
+      {/* Updated Legend with Desa Sumberagung info */}
       <div className="absolute top-4 left-4 bg-white p-4 rounded-lg shadow-lg z-[1000]">
-        <h4 className="font-semibold text-sm mb-3">Legenda Peta Sawah</h4>
+        <h4 className="font-semibold text-sm mb-3">Peta Sawah Desa Sumberagung</h4>
+        <p className="text-xs text-muted-foreground mb-3">Kec. Godong, Kab. Grobogan</p>
         
         <div className="space-y-3">
           <div>
@@ -263,9 +281,9 @@ const MapComponent = () => {
         </div>
       </div>
 
-      {/* Info Panel */}
+      {/* Updated Info Panel */}
       <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg max-w-sm z-[1000]">
-        <h4 className="font-semibold text-sm mb-2">Informasi Wilayah</h4>
+        <h4 className="font-semibold text-sm mb-2">Informasi Wilayah Desa Sumberagung</h4>
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
             <p className="text-gray-600">Total Sawah</p>
@@ -292,6 +310,7 @@ const MapComponent = () => {
         </div>
         
         <div className="mt-3 pt-2 border-t text-xs text-gray-500">
+          <p>📍 Pusat Desa: 7.0521° S, 110.7987° E</p>
           <p>💡 Klik pada area sawah untuk melihat detail informasi</p>
         </div>
       </div>

@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MapPin, Layers, Palette } from "lucide-react";
+import { MapPin, Layers, Palette, Map } from "lucide-react";
 import { CoordinateManagement } from "./pengaturan/CoordinateManagement";
 import { LayerManagement } from "./pengaturan/LayerManagement";
 import { LegendManagement } from "./pengaturan/LegendManagement";
+import { ThematicMap } from "./ThematicMap";
 import { Koordinat, LayerDemografi, LegendaItem } from "./pengaturan/pengaturan-types";
 import { pengaturanStorageService } from "../services/pengaturanStorageService";
 
@@ -38,8 +39,12 @@ export const Pengaturan = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="koordinat" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+      <Tabs defaultValue="peta-tematik" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="peta-tematik" className="flex items-center space-x-2">
+            <Map className="h-4 w-4" />
+            <span>Peta Tematik</span>
+          </TabsTrigger>
           <TabsTrigger value="koordinat" className="flex items-center space-x-2">
             <MapPin className="h-4 w-4" />
             <span>Koordinat</span>
@@ -53,6 +58,10 @@ export const Pengaturan = () => {
             <span>Legenda</span>
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="peta-tematik" className="space-y-4">
+          <ThematicMap />
+        </TabsContent>
 
         <TabsContent value="koordinat" className="space-y-4">
           <CoordinateManagement 

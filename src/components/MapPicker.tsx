@@ -12,6 +12,12 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+// Default coordinates for Desa Sumberagung
+const DESA_SUMBERAGUNG = {
+  lat: -7.0521,
+  lng: 110.7987
+};
+
 interface MapPickerProps {
   latitude?: number;
   longitude?: number;
@@ -20,8 +26,8 @@ interface MapPickerProps {
 }
 
 export const MapPicker: React.FC<MapPickerProps> = ({
-  latitude = -7.2575,
-  longitude = 112.7521,
+  latitude = DESA_SUMBERAGUNG.lat,
+  longitude = DESA_SUMBERAGUNG.lng,
   onCoordinateSelect,
   height = "400px"
 }) => {
@@ -33,14 +39,29 @@ export const MapPicker: React.FC<MapPickerProps> = ({
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Initialize map
-    const map = L.map(mapRef.current).setView([latitude, longitude], 13);
+    // Initialize map centered on Desa Sumberagung
+    const map = L.map(mapRef.current).setView([latitude, longitude], 15);
     mapInstanceRef.current = map;
 
     // Add tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+
+    // Add village boundary reference
+    L.polygon([
+      [-7.0480, 110.7950],
+      [-7.0480, 110.8024],
+      [-7.0562, 110.8024],
+      [-7.0562, 110.7950]
+    ], {
+      color: '#2563eb',
+      weight: 2,
+      opacity: 0.5,
+      fillColor: '#3b82f6',
+      fillOpacity: 0.1,
+      dashArray: '5, 5'
+    }).addTo(map).bindPopup('Batas Wilayah Desa Sumberagung');
 
     // Add initial marker
     const marker = L.marker([latitude, longitude], {
@@ -97,7 +118,7 @@ export const MapPicker: React.FC<MapPickerProps> = ({
       <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
         <strong>Koordinat Terpilih:</strong> {currentCoords.lat.toFixed(6)}, {currentCoords.lng.toFixed(6)}
         <br />
-        <em>Klik pada peta atau seret marker untuk memilih koordinat</em>
+        <em>Klik pada peta atau seret marker untuk memilih koordinat dalam wilayah Desa Sumberagung</em>
       </div>
     </div>
   );
